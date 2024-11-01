@@ -23,7 +23,6 @@ class ResponseStatus(Enum):
 
 class GeneratorState(rx.State):
     is_generating: bool = False
-    is_upscaling: bool = False
     _request_id: str = None
     output_image: str = DEFAULT_IMAGE
     output_list: list[str] = []
@@ -35,9 +34,6 @@ class GeneratorState(rx.State):
         try:
             # Check if the env variable is set
             if not self._check_api_token():
-                return
-            if self.is_upscaling:
-                yield rx.toast.warning("Wait for the image to upscale first")
                 return
             async with self:
                 Options = await self.get_state(OptionsState)
@@ -152,12 +148,11 @@ class GeneratorState(rx.State):
 
             if response.status != ResponseStatus.STARTING.value or not response:
                 async with self:
-                    self._request_id, self.is_upscaling = None, False
+                    self._request_id = None
                 yield rx.toast.error("Error starting upscaling")
                 return
 
             async with self:
-                self.is_upscaling = True
                 self._request_id = response.id
                 yield
 
@@ -180,7 +175,7 @@ class GeneratorState(rx.State):
             async with self:
                 self.upscaled_image = response.output[0]
                 self.output_list = []
-                self._request_id, self.is_upscaling = None, False
+                self._request_id = None
 
         except Exception as e:
             async with self:
@@ -202,7 +197,6 @@ class GeneratorState(rx.State):
     def _reset_state(self):
         self._request_id = None
         self.is_generating = False
-        self.is_upscaling = False
 
     def _check_api_token(self):
         if os.getenv(API_TOKEN_ENV_VAR) is None:

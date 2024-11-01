@@ -20,12 +20,11 @@ def _image_ui() -> rx.Component:
             ),
         ),
         rx.cond(
-            ~GeneratorState.is_generating
-            & ~GeneratorState.is_upscaling,  # If not generating and not upscaling
+            ~GeneratorState.is_generating,
             image_zoom(rx.image(src=GeneratorState.output_image, **styles.image_props)),
             rx.skeleton(
                 rx.box(rx.image(src=GeneratorState.output_image, **styles.image_props)),
-                loading=GeneratorState.is_generating | GeneratorState.is_upscaling,
+                loading=GeneratorState.is_generating,
             ),
         ),
     )
@@ -64,7 +63,6 @@ def _image_list_item(image: str) -> rx.Component:
             background=rx.color("accent", 9),
             on_click=GeneratorState.setvar("output_image", image),
         ),
-        loading=GeneratorState.is_generating | GeneratorState.is_upscaling,
     )
 
 
