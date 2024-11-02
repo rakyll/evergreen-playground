@@ -1,6 +1,5 @@
 import reflex as rx
 import random
-from ..components.prompt_list import prompt_list
 from ..components.styles_preset import styles_preset
 
 
@@ -68,9 +67,6 @@ class OptionsState(rx.State):
 
     def set_guidance_scale(self, value: float):
         self.guidance_scale = value[0]
-
-    def randomize_prompt(self):
-        self.prompt = random.choice(prompt_list)
 
     @rx.var
     def dimensions_str(self) -> str:

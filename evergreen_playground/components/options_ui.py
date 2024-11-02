@@ -6,14 +6,7 @@ from ..backend.generation import GeneratorState
 
 def sidebar_header() -> rx.Component:
     return rx.hstack(
-        rx.link(
-            rx.color_mode_cond(
-                rx.image(src="/reflex_black.svg", height="1.15em", width="auto"),
-                rx.image(src="/reflex_white.svg", height="1.15em", width="auto"),
-            ),
-            href="https://reflex.dev",
-            padding="0",
-        ),
+        rx.text("🌲 Playground", size="5"),
         rx.spacer(),
         rx.color_mode.button(
             style={"padding": "0", "height": "1.15em", "width": "1.15em"},
@@ -43,19 +36,6 @@ def prompt_input() -> rx.Component:
                         on_click=OptionsState.setvar("prompt", ""),
                     ),
                 ),
-                rx.tooltip(
-                    rx.box(  # Without the box the tooltip is not visible
-                        rx.icon(
-                            "dices",
-                            size=20,
-                            color=rx.color("gray", 10),
-                            cursor="pointer",
-                            _hover={"opacity": "0.8"},
-                            on_click=OptionsState.randomize_prompt,
-                        ),
-                    ),
-                    content="Randomize prompt",
-                ),
                 spacing="4",
                 align="center",
             ),
@@ -66,6 +46,7 @@ def prompt_input() -> rx.Component:
         rx.text_area(
             placeholder="What do you want to see?",
             width="100%",
+            height="200px",
             size="3",
             value=OptionsState.prompt,
             on_change=OptionsState.set_prompt,
@@ -73,50 +54,6 @@ def prompt_input() -> rx.Component:
         width="100%",
     )
 
-
-def _style_preview(style_preset: list) -> rx.Component:
-    return rx.cond(
-        style_preset[0] == OptionsState.selected_style,
-        rx.tooltip(
-            rx.box(
-                rx.image(
-                    src=style_preset[1]["path"],
-                    width="100%",
-                    height="auto",
-                    decoding="async",
-                    loading="lazy",
-                    transition="all 0.2s ease",
-                    style={
-                        "transform": "scale(0.875)",
-                    },
-                ),
-                width="110px",
-                height="auto",
-                cursor="pointer",
-                background=rx.color("accent", 9),
-                on_click=OptionsState.setvar("selected_style", ""),
-            ),
-            content=style_preset[0],
-        ),
-        rx.tooltip(
-            rx.box(
-                rx.image(
-                    src=style_preset[1]["path"],
-                    width="100%",
-                    height="auto",
-                    decoding="auto",
-                    loading="lazy",
-                    transition="all 0.2s ease",
-                ),
-                width="110px",
-                height="auto",
-                cursor="pointer",
-                background=rx.color("accent", 9),
-                on_click=OptionsState.setvar("selected_style", style_preset[0]),
-            ),
-            content=style_preset[0],
-        ),
-    )
 
 def _negative_prompt() -> rx.Component:
     return rx.vstack(
