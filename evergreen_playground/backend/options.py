@@ -42,7 +42,7 @@ class OptionsState(rx.State):
     hover: bool = False
     advanced_options_open: bool = False
     # Generation options
-    prompt: str = "Hello!"
+    endpoint: str = "http://localhost:9999/"
     negative_prompt: str = (
         "deformed, distorted, disfigured, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, mutated hands and fingers, disconnected limbs, mutation, mutated, ugly, disgusting, blurry, amputation, text, watermark, signature"
     )

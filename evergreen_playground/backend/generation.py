@@ -44,7 +44,7 @@ class GeneratorState(rx.State):
             input = {
                 "width": Options.selected_dimensions[0],
                 "height": Options.selected_dimensions[1],
-                "prompt": Options.prompt + Options.selected_style_prompt,
+                "prompt": Options.prompt,
                 "negative_prompt": Options.negative_prompt,
                 "num_inference_steps": Options.steps,
                 "num_outputs": Options.num_outputs,

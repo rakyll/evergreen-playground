@@ -18,22 +18,22 @@ def sidebar_header() -> rx.Component:
     )
 
 
-def prompt_input() -> rx.Component:
+def endpoint() -> rx.Component:
     return rx.vstack(
         rx.hstack(
             rx.icon("type", size=17, color=rx.color("green", 9)),
-            rx.text("Prompt", size="3"),
+            rx.text("Endpoint", size="3"),
             rx.spacer(),
             rx.hstack(
                 rx.cond(
-                    OptionsState.prompt,
+                    OptionsState.endpoint,
                     rx.icon(
                         "eraser",
                         size=20,
                         color=rx.color("gray", 10),
                         cursor="pointer",
                         _hover={"opacity": "0.8"},
-                        on_click=OptionsState.setvar("prompt", ""),
+                        on_click=OptionsState.setvar("endpoint", ""),
                     ),
                 ),
                 spacing="4",
@@ -43,13 +43,13 @@ def prompt_input() -> rx.Component:
             align="center",
             width="100%",
         ),
-        rx.text_area(
+        rx.input(
             placeholder="What do you want to see?",
             width="100%",
-            height="200px",
+            height="30px",
             size="3",
-            value=OptionsState.prompt,
-            on_change=OptionsState.set_prompt,
+            value=OptionsState.endpoint,
+            on_change=OptionsState.set_endpoint,
         ),
         width="100%",
     )
